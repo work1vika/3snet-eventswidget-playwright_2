@@ -15,6 +15,7 @@
 Проект содержит автоматизированные тесты для виджета событий (Events Widget). Тесты проверяют базовую загрузку, генерацию превью и отображение данных.
 
 ## 📁 Структура проекта
+```
 3snet-eventswidget-playwright_2/
 ├── fixtures/
 │ └── eventswidget-fixtures.ts # Кастомные фикстуры + Page Object для виджета
@@ -27,6 +28,7 @@
 ├── package.json
 ├── playwright.config.ts # Конфигурация Playwright и тестовые данные
 └── README.md
+```
 
 ## 🏗 Архитектура проекта
 
