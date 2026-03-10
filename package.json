@@ -1,0 +1,14 @@
+{
+  "name": "playwright-eventswidget-test",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Автотест Playwright для конструктора календаря событий 3SNET (dev.3snet.info/eventswidget).",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "typescript": "^5.0.0"
+  }
+}
+
