@@ -1,0 +1,3 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","7570","TC1: Базовая загрузка и генерация превью без выбора страны","chromium","2026-03-17","passed","2026-03-17","Events widget – базовая загрузка и превью","eventswidget.spec.ts","",""
+"","5875","TC2: Базовая загрузка и генерация превью с выбором варианта страны","chromium","2026-03-17","failed","2026-03-17","Events widget – базовая загрузка и превью","eventswidget_with_country.spec.ts","",""

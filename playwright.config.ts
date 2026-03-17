@@ -39,6 +39,8 @@ export default defineConfig({
     viewport: { width: 1280, height: 720 },
     ignoreHTTPSErrors: true,
     screenshot: 'on',
+    trace: 'on-first-retry',     // полезно для отладки
+    video: 'retain-on-failure',   // видео только для упавших тестов
  
 // Передаем конфиг в тесты через дополнительные параметры
     extraHTTPHeaders: {
@@ -58,6 +60,9 @@ export default defineConfig({
     //   use: { browserName: 'firefox' },
     // },
   ],
-  reporter: [['list']]       // простой вывод в консоль
+  reporter: [
+  ['list'],              // оставляем вывод в консоль
+  ['allure-playwright', { outputFolder: 'allure-results' }]  // добавляем сбор данных для Allure
+]
 });
 

@@ -17,12 +17,14 @@
 ## 📁 Структура проекта
 ```
 3snet-eventswidget-playwright_2/
+├── allure-report/ # Сгенерированный HTML отчет (авто-генерация) 
+├── allure-results/ # Сырые данные для Allure (авто-генерация)
 ├── fixtures/
 │ └── eventswidget-fixtures.ts # Кастомные фикстуры + Page Object для виджета
 ├── tests/
 │ ├── eventswidget.spec.ts # TC1: без выбора страны
 │ └── eventswidget_with_country.spec.ts # TC2: с выбором страны
-├── tests-results/ # Результаты тестов (авто-генерация)
+├── test-results/ # Результаты тестов (авто-генерация)
 ├── .gitignore
 ├── package-lock.json
 ├── package.json
@@ -35,7 +37,7 @@
 ### 1. **Конфигурация (`playwright.config.ts`)**
 - Централизованное хранение всех тестовых данных
 - Настройки таймаутов, селекторов, URL
-- Конфигурация браузеров и репортеров
+- Конфигурация браузеров и репортеров (включая Allure)
 
 ### 2. **Фикстуры и Page Object (`fixtures/eventswidget-fixtures.ts`)**
 - Инкапсуляция всех повторяющихся действий
@@ -124,6 +126,7 @@ export const testConfig = {
 - Node.js 16 или выше
 - npm или yarn
 - Git
+- Java Runtime Environment (JRE) - необходима для работы Allure (скачать с [официального сайта](https://www.oracle.com/java/technologies/downloads/) )
 
 ## Клонирование репозитория по HTTPS
 ```bash
@@ -131,26 +134,48 @@ git clone https://github.com/username/3snet-eventswidget-playwright_2.git
 cd 3snet-eventswidget-playwright_2 # Переход в директорию проекта
 ```
 
-## Установка зависимостей при первичном запуске клонированных тестов
+## Установка зависимостей и браузеров Playwright при первичном запуске клонированных тестов
 ```bash
-npm install
+npm install && npx playwright install
+```
+Важно: Этой командой автоматически устанавливается Allure, дополнительных действий не требуется. 
+
+## Проверка установки (рекомендуется)
+# Проверить версию Node.js
+```bash
+node --version
 ```
 
-## Установка браузеров Playwright при первичном запуске клонированных тестов
+# Проверить наличие Java
 ```bash
-npx playwright install
+java -version
 ```
 
-## Запуск тестов
+# Проверить, что Allure установлен
+```bash
+npx allure --version
+```
+
+## Запуск тестов с отчетом Allure
+# Быстрый запуск (тесты + отчет одной командой)
+```bash
+npm run test:show
+```
+После выполнения команды: 
+1. ✅ Запустятся тесты (результаты видны в терминале)
+2. ✅ Сгенерируется Allure-отчет
+3. ✅ Автоматически откроется браузер по-умолчанию с отчетом
+
+
+## Запуск тестов без отчета
 # Все тесты
 ```bash
 npx playwright test
 ```
-
 # Конкретные тесты
 ```bash
-npx playwright test tests/eventswidget.spec.ts # TC1: без выбора страны
-npx playwright test tests/eventswidget_with_country.spec.ts # TC2: с выбором страны
+npx playwright test tests/eventswidget.spec.ts          # TC1: без выбора страны
+npx playwright test tests/eventswidget_with_country.spec.ts  # TC2: с выбором страны
 ```
 
 # Режимы запуска
@@ -163,20 +188,33 @@ npx playwright test --trace on  # С трассировкой
 ```
 
 📊 Отчеты и результаты
-## Просмотр отчетов
+## Allure-отчет
+# Запустить тесты и открыть отчет одной командой (отчет автоматически откроется в браузере по умолчанию)
 ```bash
-npx playwright show-report # Открыть HTML отчет
+npm run test:show
+```
+# Если отчет не открылся автоматически
+После запуска тестов в терминале появится строка с адресом, например:
+`Server started at http://127.0.0.1:50595 `
+(порт может быть другим - 63333, 8080, 54321 и т.д.). Просто скопируйте этот адрес и откройте в браузере.
+
+
+# Запустить HTML-отчет Playwright, если возникли проблемы с Allure-отчетом
+```bash
+npx playwright show-report
 ```
 
 ## Результаты тестов
-- Результаты сохраняются в папку test-results/
-- Скриншоты при падении тестов (настройка screenshot: 'on')
-- Трассировка при включенном флаге --trace on
+- Сырые данные для Allure-отчета сохраняются в папку `test-results/`
+- Сгенерированный HTML отчет Allure (создается после генерации) сохраняется в папку `allure-report/`
+- Скриншоты и видео при падении тестов сохраняются в папку `test-results/`
+- Трассировка сохраняется при запуске с флагом `--trace on` в папке `test-results/trace/`
+
 
 🤝 Рекомендации по разработке
 ## При добавлении новых тестов:
 1. Используйте существующие методы из фикстур
-2. При необходимости добавляйте новые методы в eventswidget-fixtures.ts
+2. При необходимости добавляйте новые методы в `eventswidget-fixtures.ts`
 3. Обновляйте конфигурацию при изменении селекторов или таймаутов
 4. Следуйте существующему стилю именования (TC1, TC2...)
 
